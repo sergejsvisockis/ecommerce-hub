@@ -13,6 +13,7 @@ services:
     container_name: kafka
     ports:
       - "9092:9092"
+      - "9093:9093"
     environment:
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_LISTENERS: INSIDE://0.0.0.0:9093,OUTSIDE://0.0.0.0:9092
@@ -22,7 +23,35 @@ services:
       KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
       KAFKA_CONFLUENT_SUPPORT_METRICS_ENABLE: "false"
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
-    command: "sh -c 'exec /usr/bin/start-kafka.sh & sleep 5 && kafka-topics.sh --create --zookeeper zookeeper:2181 --replication-factor 1 --partitions 1 --topic my-topic && tail -f /dev/null'"
+    command: "sh -c 'exec /usr/bin/start-kafka.sh'"
+    depends_on:
+      - zookeeper
+    networks:
+      - ecommerce-network
+
+  order-service:
+    build:
+      context: ./order-service
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      BOOTSTRAP_SERVER: "kafka:9093"
+    depends_on:
+      - kafka
+    networks:
+      - ecommerce-network
+
+  settlement-service:
+    build:
+      context: ./settlement-service
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8081"
+    environment:
+      BOOTSTRAP_SERVER: "kafka:9093"
+    depends_on:
+      - kafka
     networks:
       - ecommerce-network
 

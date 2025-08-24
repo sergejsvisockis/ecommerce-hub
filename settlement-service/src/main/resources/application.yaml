@@ -2,7 +2,7 @@ server:
   port: 8081
 
 kafka:
-  bootstrap-server: localhost:9092
+  bootstrap-server: ${BOOTSTRAP_SERVER:localhost:9092}
   consumer:
     group-id: settlement-service-group
     key-deserializer: org.apache.kafka.common.serialization.StringDeserializer

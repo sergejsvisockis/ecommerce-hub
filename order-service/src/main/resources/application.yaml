@@ -1,5 +1,5 @@
 kafka:
-  bootstrap-server: localhost:9092
+  bootstrap-server: ${BOOTSTRAP_SERVER:localhost:9092}
   consumer:
     key-serializer: org.apache.kafka.common.serialization.StringSerializer
     value-serializer: org.apache.kafka.common.serialization.ByteArraySerializer
