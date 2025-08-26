@@ -47,7 +47,7 @@ public class SettlementConsumer extends Thread {
         LOGGER.info("Settlement consumer thread stopped");
     }
 
-    public List<byte[]> consumeSettlementRecord() {
+    private List<byte[]> consumeSettlementRecord() {
         return eventConsumer.consumer(List.of(EventType.ORDER_CREATED.name()));
     }
 

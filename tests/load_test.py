@@ -11,13 +11,13 @@ class UserTasks(TaskSet):
             "product": {
                 "productId": "f6b6e9d5-48ed-40b3-8f0a-bffe7cc9bc33",
                 "price": {
-                    "amount": 100.99,
+                    "amount": 150,
                     "currency": "EUR"
                 },
                 "quantity": 2
             },
             "totalPrice": {
-                "amount": 39.98,
+                "amount": 300,
                 "currency": "EUR"
             },
             "status": "PLACED",
