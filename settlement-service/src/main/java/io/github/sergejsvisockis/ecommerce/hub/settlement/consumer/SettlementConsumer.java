@@ -1,9 +1,10 @@
-package io.github.sergejsvisockis.ecommerce.hub.settlement;
+package io.github.sergejsvisockis.ecommerce.hub.settlement.consumer;
 
 import io.github.sergejsvisockis.ecommerce.hub.common.EComEventConsumer;
 import io.github.sergejsvisockis.ecommerce.hub.common.EventType;
 import io.github.sergejsvisockis.ecommerce.hub.common.JsonUtil;
 import io.github.sergejsvisockis.ecommerce.hub.common.order.dto.OrderRequest;
+import io.github.sergejsvisockis.ecommerce.hub.settlement.service.SettlementDataService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,9 +14,12 @@ public class SettlementConsumer extends Thread {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SettlementConsumer.class);
 
+    private final SettlementDataService settlementDataService;
     private final EComEventConsumer<List<String>, List<byte[]>> eventConsumer;
 
-    public SettlementConsumer(EComEventConsumer<List<String>, List<byte[]>> eventConsumer) {
+    public SettlementConsumer(SettlementDataService settlementDataService,
+                              EComEventConsumer<List<String>, List<byte[]>> eventConsumer) {
+        this.settlementDataService = settlementDataService;
         this.eventConsumer = eventConsumer;
     }
 
@@ -29,6 +33,7 @@ public class SettlementConsumer extends Thread {
                             {
                                 OrderRequest request = JsonUtil.fromBytes(event, OrderRequest.class);
                                 LOGGER.info("Consumed event: {}", JsonUtil.toJson(request));
+                                settlementDataService.saveSettlementData(request);
                             }
                     );
                 } else {

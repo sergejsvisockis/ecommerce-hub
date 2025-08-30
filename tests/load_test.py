@@ -1,15 +1,21 @@
+import json
+import uuid
+
 from locust import HttpUser, TaskSet, between, task
 
 
 class UserTasks(TaskSet):
 
+    def on_start(self):
+        self.client.headers = {'Content-type': 'application/json'}
+
     @task
     def make_an_order(self):
-        self.client.post("http://localhost:8080/api/v1/orders", json={
-            "orderId": "f6b6e9d5-48ed-40b3-8f0a-bffe7cc9bc33",
+        self.client.post("http://localhost:8081/api/v1/orders", json.dumps({
+            "orderId": uuid.uuid4(),
             "orderDate": "2025-08-24T09:14:50.931803",
             "product": {
-                "productId": "f6b6e9d5-48ed-40b3-8f0a-bffe7cc9bc33",
+                "productId": uuid.uuid4(),
                 "price": {
                     "amount": 150,
                     "currency": "EUR"
@@ -33,7 +39,7 @@ class UserTasks(TaskSet):
                     "expiryDate": "12/25"
                 }
             }
-        })
+        }, default=str))
 
 
 class WebsiteUser(HttpUser):

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="1" author="svisockis">
+        <createTable tableName="settlement_data">
+            <column name="id" type="UUID">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="order_id" type="UUID"/>
+            <column name="order_date" type="TIMESTAMP"/>
+            <column name="price" type="DECIMAL"/>
+            <column name="currency" type="VARCHAR(3)"/>
+            <column name="settlement_payer_details_id" type="UUID"/>
+        </createTable>
+        <createTable tableName="settlement_payer_details">
+            <column name="id" type="UUID">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="payer_first_name" type="VARCHAR(45)"/>
+            <column name="payer_last_name" type="VARCHAR(45)"/>
+            <column name="payer_email" type="VARCHAR(90)"/>
+            <column name="payer_phone" type="VARCHAR(15)"/>
+            <column name="payer_address" type="VARCHAR(65)"/>
+            <column name="debit_card_details_id" type="UUID"/>
+        </createTable>
+        <createTable tableName="settlement_debit_card_details">
+            <column name="id" type="UUID">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="card_number" type="VARCHAR(16)"/>
+            <column name="card_expiry" type="VARCHAR(5)"/>
+            <column name="card_holder_name" type="VARCHAR(150)"/>
+        </createTable>
+        <addForeignKeyConstraint constraintName="settlement_data_fk"
+                                 baseTableName="settlement_data"
+                                 baseColumnNames="settlement_payer_details_id"
+                                 referencedTableName="settlement_payer_details"
+                                 referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint constraintName="settlement_debit_card_fk"
+                                 baseTableName="settlement_payer_details"
+                                 baseColumnNames="debit_card_details_id"
+                                 referencedTableName="settlement_debit_card_details"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+
+    <changeSet id="2" author="svisockis">
+        <addUniqueConstraint constraintName="uk_payer_email_phone"
+                             tableName="settlement_payer_details"
+                             columnNames="payer_email, payer_phone"/>
+
+        <addNotNullConstraint tableName="settlement_data"
+                              columnName="settlement_payer_details_id"/>
+
+        <addNotNullConstraint tableName="settlement_payer_details"
+                              columnName="debit_card_details_id"/>
+    </changeSet>
+
+</databaseChangeLog>

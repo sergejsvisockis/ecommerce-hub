@@ -29,6 +29,17 @@ services:
     networks:
       - ecommerce-network
 
+  db:
+    image: postgres:latest
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - '5432:5432'
+    volumes:
+      - ./db_data:/var/lib/postgresql/data
+
   order-service:
     build:
       context: ./order-service

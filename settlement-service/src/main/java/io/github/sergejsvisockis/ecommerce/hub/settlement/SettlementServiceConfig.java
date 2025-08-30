@@ -2,6 +2,8 @@ package io.github.sergejsvisockis.ecommerce.hub.settlement;
 
 import io.github.sergejsvisockis.ecommerce.hub.common.EComEventConsumer;
 import io.github.sergejsvisockis.ecommerce.hub.common.kafka.EComKafkaEventConsumer;
+import io.github.sergejsvisockis.ecommerce.hub.settlement.consumer.SettlementConsumer;
+import io.github.sergejsvisockis.ecommerce.hub.settlement.service.SettlementDataService;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -29,8 +31,10 @@ public class SettlementServiceConfig {
     }
 
     @Bean
-    public SettlementConsumer settlementConsumer() {
-        SettlementConsumer settlementConsumer = new SettlementConsumer(eventConsumer());
+    public SettlementConsumer settlementConsumer(SettlementDataService settlementDataService) {
+        SettlementConsumer settlementConsumer = new SettlementConsumer(
+                settlementDataService,
+                eventConsumer());
         settlementConsumer.setDaemon(true);
         settlementConsumer.start();
         return settlementConsumer;

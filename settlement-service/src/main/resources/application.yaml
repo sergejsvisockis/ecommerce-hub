@@ -7,3 +7,12 @@ kafka:
     group-id: settlement-service-group
     key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
     value-deserializer: org.apache.kafka.common.serialization.ByteArrayDeserializer
+
+spring:
+  liquibase:
+    change-log: db/changelog-master.xml
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
