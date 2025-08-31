@@ -2,10 +2,10 @@ package io.github.sergejsvisockis.ecommerce.hub.settlement.service;
 
 import io.github.sergejsvisockis.ecommerce.hub.common.order.dto.OrderRequest;
 import io.github.sergejsvisockis.ecommerce.hub.common.order.dto.Payer;
-import io.github.sergejsvisockis.ecommerce.hub.settlement.consumer.SettlementDataMapper;
-import io.github.sergejsvisockis.ecommerce.hub.settlement.consumer.SettlementPayerMapper;
 import io.github.sergejsvisockis.ecommerce.hub.settlement.entity.SettlementData;
 import io.github.sergejsvisockis.ecommerce.hub.settlement.entity.SettlementPayerDetails;
+import io.github.sergejsvisockis.ecommerce.hub.settlement.mapper.SettlementDataMapper;
+import io.github.sergejsvisockis.ecommerce.hub.settlement.mapper.SettlementPayerMapper;
 import io.github.sergejsvisockis.ecommerce.hub.settlement.repository.CacheableSettlementPayerRepository;
 import io.github.sergejsvisockis.ecommerce.hub.settlement.repository.SettlementDataRepository;
 import org.springframework.stereotype.Service;

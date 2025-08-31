@@ -1,4 +1,4 @@
-package io.github.sergejsvisockis.ecommerce.hub.settlement.consumer;
+package io.github.sergejsvisockis.ecommerce.hub.settlement.mapper;
 
 import io.github.sergejsvisockis.ecommerce.hub.common.order.dto.OrderRequest;
 import io.github.sergejsvisockis.ecommerce.hub.settlement.entity.SettlementData;
