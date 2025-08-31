@@ -6,22 +6,20 @@ import io.github.sergejsvisockis.ecommerce.hub.settlement.consumer.SettlementDat
 import io.github.sergejsvisockis.ecommerce.hub.settlement.consumer.SettlementPayerMapper;
 import io.github.sergejsvisockis.ecommerce.hub.settlement.entity.SettlementData;
 import io.github.sergejsvisockis.ecommerce.hub.settlement.entity.SettlementPayerDetails;
+import io.github.sergejsvisockis.ecommerce.hub.settlement.repository.CacheableSettlementPayerRepository;
 import io.github.sergejsvisockis.ecommerce.hub.settlement.repository.SettlementDataRepository;
-import io.github.sergejsvisockis.ecommerce.hub.settlement.repository.SettlementPayerRepository;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class SettlementDataService {
 
     private final SettlementDataRepository settlementDataRepository;
-    private final SettlementPayerRepository settlementPayerRepository;
+    private final CacheableSettlementPayerRepository settlementPayerRepository;
     private final SettlementDataMapper settlementDataMapper;
     private final SettlementPayerMapper settlementPayerMapper;
 
     public SettlementDataService(SettlementDataRepository settlementDataRepository,
-                                 SettlementPayerRepository settlementPayerRepository,
+                                 CacheableSettlementPayerRepository settlementPayerRepository,
                                  SettlementDataMapper settlementDataMapper,
                                  SettlementPayerMapper settlementPayerMapper) {
         this.settlementDataRepository = settlementDataRepository;
@@ -35,12 +33,12 @@ public class SettlementDataService {
 
         SettlementData settlementData = settlementDataMapper.mapToSettlementData(request);
 
-        Optional<SettlementPayerDetails> settlementPayer =
-                settlementPayerRepository.findBySettlementPayerEmail(payer.getEmail(), payer.getPhone());
+        SettlementPayerDetails settlementPayer =
+                settlementPayerRepository.findBySettlementPayerDetails(payer.getEmail(), payer.getPhone());
 
-        if (settlementPayer.isPresent()) {
+        if (settlementPayer != null) {
 
-            settlementData.setPyerId(settlementPayer.get().getId());
+            settlementData.setPyerId(settlementPayer.getId());
 
         } else {
 

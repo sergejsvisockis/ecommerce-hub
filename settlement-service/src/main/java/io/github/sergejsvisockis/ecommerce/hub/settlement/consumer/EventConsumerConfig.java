@@ -1,8 +1,7 @@
-package io.github.sergejsvisockis.ecommerce.hub.settlement;
+package io.github.sergejsvisockis.ecommerce.hub.settlement.consumer;
 
 import io.github.sergejsvisockis.ecommerce.hub.common.EComEventConsumer;
 import io.github.sergejsvisockis.ecommerce.hub.common.kafka.EComKafkaEventConsumer;
-import io.github.sergejsvisockis.ecommerce.hub.settlement.consumer.SettlementConsumer;
 import io.github.sergejsvisockis.ecommerce.hub.settlement.service.SettlementDataService;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,17 +12,17 @@ import java.util.List;
 import java.util.Properties;
 
 @Configuration
-public class SettlementServiceConfig {
+public class EventConsumerConfig {
 
     private final String bootstrapServer;
     private final String groupId;
     private final String keyDeserializer;
     private final String valueDeserializer;
 
-    public SettlementServiceConfig(@Value("${kafka.bootstrap-server}") String bootstrapServer,
-                                   @Value("${kafka.consumer.group-id}") String groupId,
-                                   @Value("${kafka.consumer.key-deserializer}") String keyDeserializer,
-                                   @Value("${kafka.consumer.value-deserializer}") String valueDeserializer) {
+    public EventConsumerConfig(@Value("${kafka.bootstrap-server}") String bootstrapServer,
+                               @Value("${kafka.consumer.group-id}") String groupId,
+                               @Value("${kafka.consumer.key-deserializer}") String keyDeserializer,
+                               @Value("${kafka.consumer.value-deserializer}") String valueDeserializer) {
         this.bootstrapServer = bootstrapServer;
         this.groupId = groupId;
         this.keyDeserializer = keyDeserializer;
