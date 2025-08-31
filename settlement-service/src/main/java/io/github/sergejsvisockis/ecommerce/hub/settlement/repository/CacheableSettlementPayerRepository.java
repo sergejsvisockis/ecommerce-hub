@@ -22,7 +22,7 @@ public class CacheableSettlementPayerRepository {
         this.cache = Caffeine.newBuilder()
                 .expireAfterWrite(1, TimeUnit.HOURS)
                 .initialCapacity(10)
-                .maximumSize(500)
+                .maximumSize(20)
                 .build();
     }
 
