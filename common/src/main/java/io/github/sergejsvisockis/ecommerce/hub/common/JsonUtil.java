@@ -1,5 +1,7 @@
 package io.github.sergejsvisockis.ecommerce.hub.common;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
@@ -45,7 +47,11 @@ public final class JsonUtil {
     private static ObjectMapper getMapper() {
         if (mapper == null) {
             return new ObjectMapper()
-                    .registerModule(new JavaTimeModule());
+                    .registerModule(new JavaTimeModule())
+                    .setVisibility(
+                            PropertyAccessor.FIELD,
+                            Visibility.ANY
+                    );
         }
         return mapper;
     }

@@ -3,8 +3,8 @@ package io.github.sergejsvisockis.ecommerce.hub.settlement.repository;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
-import static io.github.sergejsvisockis.ecommerce.hub.settlement.util.JsonUtil.fromBytes;
-import static io.github.sergejsvisockis.ecommerce.hub.settlement.util.JsonUtil.toBytes;
+import static io.github.sergejsvisockis.ecommerce.hub.common.JsonUtil.fromBytes;
+import static io.github.sergejsvisockis.ecommerce.hub.common.JsonUtil.toBytes;
 
 @Component
 public class GenericRedisTemplate<K, V> {
