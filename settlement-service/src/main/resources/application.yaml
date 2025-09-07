@@ -12,9 +12,9 @@ spring:
   liquibase:
     change-log: db/changelog-master.xml
   datasource:
-    url: jdbc:postgresql://localhost:5432/postgres
-    username: postgres
-    password: postgres
+    url: jdbc:postgresql://localhost:5432/settlement_service
+    username: ecom
+    password: ecom
     driver-class-name: org.postgresql.Driver
   data:
     redis:
