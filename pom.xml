@@ -13,6 +13,7 @@
         <maven.compiler.target>24</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
+        <openapi-generator-maven-plugin.version>7.15.0</openapi-generator-maven-plugin.version>
         <spring-boot.version>3.5.4</spring-boot.version>
     </properties>
 
@@ -20,6 +21,8 @@
         <module>common</module>
         <module>order-service</module>
         <module>settlement-service</module>
+        <module>store-api</module>
+        <module>store-service</module>
     </modules>
 
     <dependencyManagement>
@@ -41,6 +44,11 @@
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-maven-plugin</artifactId>
                     <version>${spring-boot.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.openapitools</groupId>
+                    <artifactId>openapi-generator-maven-plugin</artifactId>
+                    <version>${openapi-generator-maven-plugin.version}</version>
                 </plugin>
             </plugins>
         </pluginManagement>

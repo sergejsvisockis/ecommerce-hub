@@ -1,0 +1,11 @@
+server:
+  port: 8084
+
+spring:
+  liquibase:
+    change-log: db/changelog-master.xml
+  datasource:
+    url: jdbc:postgresql://localhost:5432/store_service
+    username: ecom
+    password: ecom
+    driver-class-name: org.postgresql.Driver
