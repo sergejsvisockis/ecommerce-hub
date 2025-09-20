@@ -20,6 +20,25 @@ paths:
               schema:
                 $ref: '#/components/schemas/ProductResponse'
 
+  /api/v1/products/create:
+    post:
+      tags:
+        - products
+      summary: Create a new product
+      operationId: createProduct
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductRequest'
+      responses:
+        '201':
+          description: Product has been created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+
   /api/v1/cart:
     post:
       tags:
@@ -86,7 +105,7 @@ paths:
       tags:
         - order
       summary: Get order by Id
-      operationId: getOrderById
+      operationId: getOrder
       parameters:
         - in: path
           name: orderId
@@ -105,6 +124,15 @@ paths:
 
 components:
   schemas:
+    ProductRequest:
+      properties:
+        name:
+          type: string
+        price:
+          $ref: '#/components/schemas/Price'
+        isoCode:
+          type: string
+
     ProductResponse:
       type: object
       properties:
@@ -116,6 +144,9 @@ components:
     Product:
       type: object
       properties:
+        productId:
+          type: string
+          format: uuid
         name:
           type: string
         price:
@@ -144,7 +175,7 @@ components:
     CartResponse:
       type: object
       properties:
-        id:
+        cartId:
           type: string
           format: uuid
         items:
@@ -168,8 +199,6 @@ components:
         orderDate:
           type: string
           format: date-time
-        totalPrice:
-          $ref: '#/components/schemas/Price'
         status:
           $ref: '#/components/schemas/OrderStatus'
 
@@ -188,7 +217,7 @@ components:
     OrderStatus:
       type: string
       enum:
-        - PLACED,
+        - PLACED
         - CANCELLED
         - PAYMENT_PENDING
         - PAYMENT_COMPLETED
@@ -197,6 +226,7 @@ components:
     BuyerReferenceRequest:
       type: object
       properties:
-        buyerId:
+        firstName:
           type: string
-          format: uuid
+        lastName:
+          type: string

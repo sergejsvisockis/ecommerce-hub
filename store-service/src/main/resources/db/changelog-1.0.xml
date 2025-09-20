@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="1" author="svisockis">
+
+        <createTable tableName="product">
+            <column name="product_id" type="UUID">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(45)"/>
+            <column name="price" type="DECIMAL"/>
+            <column name="currency" type="VARCHAR(3)"/>
+            <column name="iso_code" type="VARCHAR(8)"/>
+        </createTable>
+
+        <createTable tableName="cart">
+            <column name="cart_id" type="UUID">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="created_at" type="TIMESTAMP"/>
+            <column name="buyer_id" type="UUID"/>
+        </createTable>
+
+        <createTable tableName="cart_item">
+            <column name="cart_item_id" type="UUID">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="cart_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="product_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="quantity" type="INTEGER"/>
+        </createTable>
+
+        <addForeignKeyConstraint constraintName="fk_cart_item_cart"
+                                 baseTableName="cart_item"
+                                 baseColumnNames="cart_id"
+                                 referencedTableName="cart"
+                                 referencedColumnNames="cart_id"/>
+
+        <addForeignKeyConstraint constraintName="fk_product"
+                                 baseTableName="cart_item"
+                                 baseColumnNames="product_id"
+                                 referencedTableName="product"
+                                 referencedColumnNames="product_id"/>
+
+        <createTable tableName="cart_buyer">
+            <column name="buyer_id" type="UUID">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="first_name" type="VARCHAR(45)"/>
+            <column name="last_name" type="VARCHAR(45)"/>
+        </createTable>
+
+        <addForeignKeyConstraint constraintName="fk_cart_buyer"
+                                 baseTableName="cart"
+                                 baseColumnNames="buyer_id"
+                                 referencedTableName="cart_buyer"
+                                 referencedColumnNames="buyer_id"/>
+
+        <createTable tableName="orders">
+            <column name="order_id" type="UUID">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+
+            <column name="cart_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="order_date" type="TIMESTAMP"/>
+            <column name="status" type="VARCHAR(17)"/>
+        </createTable>
+
+        <addForeignKeyConstraint constraintName="fk_order_cart"
+                                 baseTableName="orders"
+                                 baseColumnNames="cart_id"
+                                 referencedTableName="cart"
+                                 referencedColumnNames="cart_id"/>
+    </changeSet>
+
+    <changeSet id="2" author="svisockis">
+        <addColumn tableName="orders">
+            <column name="total_price" type="DECIMAL"/>
+            <column name="currency" type="VARCHAR(3)"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="3" author="svisockis">
+        <dropColumn tableName="orders" columnName="total_price"/>
+    </changeSet>
+
+</databaseChangeLog>
