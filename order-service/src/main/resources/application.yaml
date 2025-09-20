@@ -1,8 +1,10 @@
 server:
   port: 8081
 
-kafka:
-  bootstrap-server: ${BOOTSTRAP_SERVER:localhost:9092}
-  consumer:
-    key-serializer: org.apache.kafka.common.serialization.StringSerializer
-    value-serializer: org.apache.kafka.common.serialization.ByteArraySerializer
+spring:
+  kafka:
+    bootstrap-servers: ${BOOTSTRAP_SERVER:localhost:9092}
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.ByteArraySerializer
+      order-created-topic: order-created
