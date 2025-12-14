@@ -1,7 +1,7 @@
 package io.github.sergejsvisockis.ecommerce.hub.settlement.consumer;
 
 import io.github.sergejsvisockis.ecommerce.hub.common.JsonUtil;
-import io.github.sergejsvisockis.ecommerce.hub.common.order.dto.OrderRequest;
+import io.github.sergejsvisockis.ecommerce.hub.common.order.dto.SettlementAggregate;
 import io.github.sergejsvisockis.ecommerce.hub.settlement.service.SettlementDataService;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.slf4j.Logger;
@@ -25,9 +25,9 @@ public class SettlementConsumer {
             topics = "${spring.kafka.consumer.order-created-topic}"
     )
     public void consumeSettlement(ConsumerRecord<String, byte[]> data) {
-        OrderRequest orderRequest = JsonUtil.fromBytes(data.value(), OrderRequest.class);
-        LOGGER.info("Consumed event: {}", JsonUtil.toJson(orderRequest));
-        settlementDataService.saveSettlementData(orderRequest);
+        SettlementAggregate settlementAggregate = JsonUtil.fromBytes(data.value(), SettlementAggregate.class);
+        LOGGER.info("Consumed event: {}", JsonUtil.toJson(settlementAggregate));
+        settlementDataService.saveSettlementData(settlementAggregate);
     }
 
 }

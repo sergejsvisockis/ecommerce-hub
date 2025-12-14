@@ -5,8 +5,8 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-@JsonDeserialize(builder = OrderRequest.Builder.class)
-public final class OrderRequest {
+@JsonDeserialize(builder = SettlementAggregate.Builder.class)
+public final class SettlementAggregate {
 
     private final UUID orderId;
     private final LocalDateTime orderDate;
@@ -15,7 +15,7 @@ public final class OrderRequest {
     private final OrderStatus status;
     private final Payer payer;
 
-    private OrderRequest(Builder builder) {
+    private SettlementAggregate(Builder builder) {
         this.orderId = builder.orderId;
         this.orderDate = builder.orderDate;
         this.product = builder.product;
@@ -56,7 +56,6 @@ public final class OrderRequest {
         private UUID orderId;
         private LocalDateTime orderDate;
         private Product product;
-
         private Price totalPrice;
         private OrderStatus status;
         private Payer payer;
@@ -95,8 +94,8 @@ public final class OrderRequest {
             return this;
         }
 
-        public OrderRequest build() {
-            return new OrderRequest(this);
+        public SettlementAggregate build() {
+            return new SettlementAggregate(this);
         }
     }
 }

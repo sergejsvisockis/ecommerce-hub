@@ -1,7 +1,7 @@
 package io.github.sergejsvisockis.ecommerce.hub.order;
 
 import io.github.sergejsvisockis.ecommerce.hub.common.JsonUtil;
-import io.github.sergejsvisockis.ecommerce.hub.common.order.dto.OrderRequest;
+import io.github.sergejsvisockis.ecommerce.hub.common.order.dto.SettlementAggregate;
 import io.github.sergejsvisockis.ecommerce.hub.common.order.dto.OrderResponse;
 import io.github.sergejsvisockis.ecommerce.hub.common.order.dto.OrderState;
 import org.apache.kafka.clients.producer.RecordMetadata;
@@ -33,7 +33,7 @@ public class OrderController {
     }
 
     @PostMapping("/api/v1/orders")
-    public ResponseEntity<OrderResponse> createOrder(@RequestBody OrderRequest request) {
+    public ResponseEntity<OrderResponse> createOrder(@RequestBody SettlementAggregate request) {
         try {
             CompletableFuture<SendResult<String, byte[]>> sendResultFuture =
                     kafkaTemplate.send(orderCreatedTopic, JsonUtil.toBytes(request));

@@ -1,6 +1,6 @@
 package io.github.sergejsvisockis.ecommerce.hub.settlement.service;
 
-import io.github.sergejsvisockis.ecommerce.hub.common.order.dto.OrderRequest;
+import io.github.sergejsvisockis.ecommerce.hub.common.order.dto.SettlementAggregate;
 import io.github.sergejsvisockis.ecommerce.hub.common.order.dto.Payer;
 import io.github.sergejsvisockis.ecommerce.hub.settlement.entity.SettlementData;
 import io.github.sergejsvisockis.ecommerce.hub.settlement.entity.SettlementPayerDetails;
@@ -28,7 +28,7 @@ public class SettlementDataService {
         this.settlementPayerMapper = settlementPayerMapper;
     }
 
-    public void saveSettlementData(OrderRequest request) {
+    public void saveSettlementData(SettlementAggregate request) {
         Payer payer = request.getPayer();
 
         SettlementData settlementData = settlementDataMapper.mapToSettlementData(request);
