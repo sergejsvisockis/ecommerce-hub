@@ -1,0 +1,10 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: ecommerce-hub
+  annotations:
+    github.com/project-slug: sergejsvisockis/ecommerce-hub
+spec:
+  type: other
+  lifecycle: unknown
+  owner: sergejs
